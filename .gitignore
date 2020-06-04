@@ -1,0 +1,9 @@
+# Misc directories
+.cache
+.vscode
+
+# Node modules
+node_modules
+
+# Production build
+dist
