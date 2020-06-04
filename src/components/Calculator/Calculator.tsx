@@ -1,32 +1,39 @@
-import * as React from 'react'
+import React, { Fragment, Component, MouseEvent } from 'react'
+
 import Buttons from './CalculatorButtons'
+import Alert from '../Alert/Alert'
 
 class Calculator extends React.Component<{}, {}> {
     render() {
         return (
-            <React.Fragment>
+            <Fragment>
                 <CalculatorBody />
-            </React.Fragment>
+            </Fragment>
         )
     }
 }
 
-interface CBProps {}
-
 interface CBState {
     currentValue: string[]
     expression: string[]
+    hasErrors: boolean
 }
 
 /** Calculator Body component. */
-class CalculatorBody extends React.Component<CBProps, CBState> {
-    constructor(props: CBProps) {
-        super(props)
-        this.state = {
-            currentValue: [],
-            expression: [],
-        }
+class CalculatorBody extends Component<{}, CBState> {
+    private multipleZeroPattern: RegExp = /(^[0]{1,})/gi
+    private multipleDotPattern: RegExp = /([.]{2,})/gi
+    private initialState: CBState = {
+        currentValue: [],
+        expression: [],
+        hasErrors: false,
+    }
 
+    constructor() {
+        // TODO: Read more about this error.
+        // @ts-ignore
+        super()
+        this.state = this.initialState
         this.handleButtonsClick = this.handleButtonsClick.bind(this)
         this.handleClearClick = this.handleClearClick.bind(this)
         this.handleEqualsClick = this.handleEqualsClick.bind(this)
@@ -35,23 +42,19 @@ class CalculatorBody extends React.Component<CBProps, CBState> {
     /** Event handler for all the buttons.
      * @param event Event.
      */
-    handleButtonsClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
-        const validationPattern: RegExp = /([0]{2,})|([.]{2,})/gi
-        const multipleDotPattern: RegExp = /([.]{2,})/gi
-        const multipleZeroPattern: RegExp = /([0]{2,})/gi
-        const operators: string[] = ['+', '-', '/', '*', '^', 'cos']
+    handleButtonsClick = (event: MouseEvent<HTMLButtonElement>): void => {
+        const operators: string[] = ['+', '-', '/', '*', '^']
         const target: HTMLButtonElement = event.target as HTMLButtonElement
         let val: string = target.value
         const { currentValue, expression } = this.state
         const invalidCondition: boolean =
-            (currentValue[currentValue.length - 1] === '.' && val === '.') ||
-            currentValue[0] === '0' ||
-            val === '0'
+            currentValue[currentValue.length - 1] === '.' && val === '.'
 
         if (invalidCondition) {
             this.setState({
                 currentValue: [...currentValue],
                 expression: [...expression],
+                hasErrors: true,
             })
         } else {
             this.setState({
@@ -69,24 +72,16 @@ class CalculatorBody extends React.Component<CBProps, CBState> {
     }
 
     /** Event handler for clear button which will reset the state. */
-    handleClearClick = () => {
-        this.setState({
-            expression: [],
-            currentValue: [],
-        })
+    handleClearClick = (): void => {
+        this.setState(this.initialState)
     }
 
-    /** Event handler for equals button which will evaluate
-     * the expresssion.
-     */
-    handleEqualsClick = () => {
+    /** Event handler for equals button which will evaluate the expresssion. */
+    handleEqualsClick = (): void => {
         const { expression } = this.state
         if (expression.length) {
-            let exprStr = expression.join('') || '0'
-
-            if (exprStr.indexOf('0') === 0) {
-                exprStr = exprStr.slice(1)
-            }
+            // Remove all the leading zeroes.
+            let exprStr = expression.join('').replace(this.multipleZeroPattern, '') || '0'
 
             this.setState({
                 expression: [eval(exprStr)],
@@ -96,33 +91,36 @@ class CalculatorBody extends React.Component<CBProps, CBState> {
     }
 
     render() {
-        const { currentValue, expression } = this.state
+        const { currentValue, expression, hasErrors } = this.state
 
         console.log(expression)
 
         return (
-            <div className="calculator">
-                <div id="display" className="calculator__display">
-                    {currentValue.length && currentValue}
+            <Fragment>
+                {hasErrors && <Alert message="Invalid action!" severity="danger" />}
+                <div className="calculator">
+                    <div id="display" className="calculator__display">
+                        <p>{currentValue.length && currentValue}</p>
+                    </div>
+                    <div className="calculator__buttons">
+                        <button
+                            id="clear"
+                            className="button is-warning is-medium"
+                            onClick={this.handleClearClick}
+                        >
+                            Clear
+                        </button>
+                        <Buttons onClick={this.handleButtonsClick} />
+                        <button
+                            id="equals"
+                            className="button is-success is-medium"
+                            onClick={this.handleEqualsClick}
+                        >
+                            =
+                        </button>
+                    </div>
                 </div>
-                <div className="calculator__buttons">
-                    <button
-                        id="clear"
-                        onClick={this.handleClearClick}
-                        className="button is-warning is-medium"
-                    >
-                        Clear
-                    </button>
-                    <Buttons onClick={this.handleButtonsClick} />
-                    <button
-                        id="equals"
-                        onClick={this.handleEqualsClick}
-                        className="button is-success is-medium"
-                    >
-                        =
-                    </button>
-                </div>
-            </div>
+            </Fragment>
         )
     }
 }

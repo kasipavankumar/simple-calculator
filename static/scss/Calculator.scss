@@ -1,22 +1,29 @@
 .calculator {
+    display: flex;
+    flex-direction: column;
+
     &__display {
+        box-sizing: border-box;
+
         font-family: inherit;
         font-size: 1.5rem;
 
         height: 100px;
         width: 100%;
 
+        overflow-wrap: break-word;
+
         margin: 0.5rem 0;
         padding: 0.5rem;
 
         color: white;
-        background-color: #444;
+        background-color: #555;
         border-radius: 2px;
     }
 
     &__buttons {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(100px, 0.5fr));
         gap: 10px;
     }
 }

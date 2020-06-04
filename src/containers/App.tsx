@@ -1,15 +1,17 @@
-import * as React from 'react'
+import React, { Component, Suspense, lazy } from 'react'
 import { render } from 'react-dom'
 
-import Calculator from '../components/Calculator/Calculator'
+const Calculator = lazy(() => import('../components/Calculator/Calculator'))
 
 import '../../static/scss/App.scss'
 
-class App extends React.Component {
+class App extends Component {
     render() {
         return (
             <div className="container">
-                <Calculator />
+                <Suspense fallback={<h1>Loading</h1>}>
+                    <Calculator />
+                </Suspense>
             </div>
         )
     }
