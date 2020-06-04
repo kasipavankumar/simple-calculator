@@ -43,7 +43,10 @@ class CalculatorBody extends React.Component<CBProps, CBState> {
         const target: HTMLButtonElement = event.target as HTMLButtonElement
         let val: string = target.value
         const { currentValue, expression } = this.state
-        const invalidCondition: boolean = (currentValue[currentValue.length - 1] === '.' && val === '.') || currentValue[0] === '0' || val === '0'
+        const invalidCondition: boolean =
+            (currentValue[currentValue.length - 1] === '.' && val === '.') ||
+            currentValue[0] === '0' ||
+            val === '0'
 
         if (invalidCondition) {
             this.setState({
@@ -103,11 +106,19 @@ class CalculatorBody extends React.Component<CBProps, CBState> {
                     {currentValue.length && currentValue}
                 </div>
                 <div className="calculator__buttons">
-                    <button id="clear" onClick={this.handleClearClick} className="button is-warning is-medium">
+                    <button
+                        id="clear"
+                        onClick={this.handleClearClick}
+                        className="button is-warning is-medium"
+                    >
                         Clear
                     </button>
                     <Buttons onClick={this.handleButtonsClick} />
-                    <button id="equals" onClick={this.handleEqualsClick} className="button is-success is-medium">
+                    <button
+                        id="equals"
+                        onClick={this.handleEqualsClick}
+                        className="button is-success is-medium"
+                    >
                         =
                     </button>
                 </div>

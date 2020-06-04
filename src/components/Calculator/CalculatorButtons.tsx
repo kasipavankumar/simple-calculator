@@ -20,7 +20,13 @@ const NumberButtons: React.FunctionComponent<NBProps> = (props) => {
     return (
         <React.Fragment>
             {numberButtons.map((button) => (
-                <button className="button is-info is-medium" onClick={props.onClick} key={button.id} id={button.id} value={button.value}>
+                <button
+                    className="button is-info is-medium"
+                    onClick={props.onClick}
+                    key={button.id}
+                    id={button.id}
+                    value={button.value}
+                >
                     {button.value}
                 </button>
             ))}
@@ -35,7 +41,14 @@ const ActionButtons: React.FunctionComponent<ABProps> = (props) => {
         <React.Fragment>
             {actionButtons.map((button) => (
                 // @ts-ignore
-                <button className="button is-info is-medium" onClick={props.onClick} key={button.id} id={button.id} value={button.value} operation={button.operation && button.operation}>
+                <button
+                    className="button is-info is-medium"
+                    onClick={props.onClick}
+                    key={button.id}
+                    id={button.id}
+                    value={button.value}
+                    operation={button.operation && button.operation}
+                >
                     {button.value}
                 </button>
             ))}

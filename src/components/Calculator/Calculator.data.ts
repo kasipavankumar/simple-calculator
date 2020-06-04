@@ -1,6 +1,6 @@
 interface IMappings {
     id: string
-    value: number | string,
+    value: number | string
     operation?: string | null
 }
 
