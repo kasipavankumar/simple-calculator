@@ -19,6 +19,12 @@
         color: white;
         background-color: #555;
         border-radius: 2px;
+
+        &-inline-error-message {
+            margin-top: 15px;
+            color: #ffdd57;
+            font-size: small;
+        }
     }
 
     &__buttons {

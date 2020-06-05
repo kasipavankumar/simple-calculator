@@ -17,16 +17,19 @@ interface CBState {
     currentValue: string[]
     expression: string[]
     hasErrors: boolean
+    errorMessage: string
 }
 
 /** Calculator Body component. */
 class CalculatorBody extends Component<{}, CBState> {
+    private readonly operators: string[] = ['+', '-', '/', '*', '^']
     private multipleZeroPattern: RegExp = /(^[0]{1,})/gi
     private multipleDotPattern: RegExp = /([.]{2,})/gi
     private initialState: CBState = {
         currentValue: [],
         expression: [],
         hasErrors: false,
+        errorMessage: '',
     }
 
     constructor() {
@@ -43,27 +46,34 @@ class CalculatorBody extends Component<{}, CBState> {
      * @param event Event.
      */
     handleButtonsClick = (event: MouseEvent<HTMLButtonElement>): void => {
-        const operators: string[] = ['+', '-', '/', '*', '^']
         const target: HTMLButtonElement = event.target as HTMLButtonElement
-        let val: string = target.value
         const { currentValue, expression } = this.state
-        const invalidCondition: boolean =
-            currentValue[currentValue.length - 1] === '.' && val === '.'
+        let val: string = target.value
 
-        if (invalidCondition) {
+        if (currentValue[currentValue.length - 1] === '.' && val === '.') {
             this.setState({
                 currentValue: [...currentValue],
                 expression: [...expression],
                 hasErrors: true,
+                errorMessage: 'Cannot have multiple decimal in a number!',
+            })
+        } else if (currentValue[0] === '0' && val === '0') {
+            this.setState({
+                currentValue: [...currentValue.slice(1), val],
+                expression: [...expression.slice(1), val],
+                hasErrors: true,
+                errorMessage: 'Calculations cannot start with multiple zeroes!',
             })
         } else {
             this.setState({
                 currentValue: [...currentValue, val],
                 expression: [...expression, val],
+                hasErrors: false,
+                errorMessage: '',
             })
         }
 
-        if (operators.includes(val)) {
+        if (this.operators.includes(val)) {
             this.setState({
                 // @ts-ignore
                 expression: [...expression, target.attributes.operation.value],
@@ -81,31 +91,33 @@ class CalculatorBody extends Component<{}, CBState> {
         const { expression } = this.state
         if (expression.length) {
             // Remove all the leading zeroes.
-            let exprStr = expression.join('').replace(this.multipleZeroPattern, '') || '0'
+            let exprStr: string = expression.join('').replace(this.multipleZeroPattern, '') || '0'
 
             this.setState({
                 expression: [eval(exprStr)],
                 currentValue: [eval(exprStr)],
+                hasErrors: false,
+                errorMessage: '',
             })
         }
     }
 
     render() {
-        const { currentValue, expression, hasErrors } = this.state
+        const { currentValue, expression, hasErrors, errorMessage } = this.state
 
         console.log(expression)
 
         return (
             <Fragment>
-                {hasErrors && <Alert message="Invalid action!" severity="danger" />}
                 <div className="calculator">
+                    {/* {hasErrors && <Alert message={errorMessage} severity="warning" />} */}
                     <div id="display" className="calculator__display">
                         <p>{currentValue.length && currentValue}</p>
                     </div>
                     <div className="calculator__buttons">
                         <button
                             id="clear"
-                            className="button is-warning is-medium"
+                            className="button is-danger is-medium"
                             onClick={this.handleClearClick}
                         >
                             Clear

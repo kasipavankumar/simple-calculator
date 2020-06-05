@@ -5,6 +5,7 @@ const Calculator = lazy(() => import('../components/Calculator/Calculator'))
 
 import '../../static/scss/App.scss'
 
+// TODO: Add a Loading component.
 class App extends Component {
     render() {
         return (

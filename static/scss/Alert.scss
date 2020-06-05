@@ -1,0 +1,31 @@
+.notification {
+    position: fixed;
+    top: 20px;
+    left: unset;
+    right: 20px;
+    z-index: 10;
+
+    height: 50px;
+    width: auto;
+
+    border-radius: 2px;
+    margin: 0.5rem 0 !important;
+    padding: 1rem;
+
+    font-size: small;
+
+    animation-name: fade-in;
+    animation-duration: 0.5s;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in-out;
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
