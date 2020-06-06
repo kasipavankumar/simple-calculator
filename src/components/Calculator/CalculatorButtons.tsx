@@ -5,18 +5,7 @@ interface Props {
     onClick: (event: MouseEvent<HTMLButtonElement>) => void
 }
 
-const Buttons: FunctionComponent<Props> = (props) => {
-    return (
-        <Fragment>
-            <NumberButtons onClick={props.onClick} />
-            <ActionButtons onClick={props.onClick} />
-        </Fragment>
-    )
-}
-
-interface NBProps extends Props {}
-
-const NumberButtons: FunctionComponent<NBProps> = (props) => {
+export const NumberButtons: FunctionComponent<Props> = (props) => {
     return (
         <Fragment>
             {numberButtons.map((button) => (
@@ -34,9 +23,7 @@ const NumberButtons: FunctionComponent<NBProps> = (props) => {
     )
 }
 
-interface ABProps extends Props {}
-
-const ActionButtons: FunctionComponent<ABProps> = (props) => {
+export const ActionButtons: FunctionComponent<Props> = (props) => {
     return (
         <Fragment>
             {actionButtons.map((button) => (
@@ -55,5 +42,3 @@ const ActionButtons: FunctionComponent<ABProps> = (props) => {
         </Fragment>
     )
 }
-
-export default Buttons
