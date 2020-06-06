@@ -3,7 +3,7 @@ import React, { Fragment, Component, MouseEvent } from 'react'
 import { NumberButtons, ActionButtons } from './CalculatorButtons'
 // import Alert from '../Alert/Alert'
 
-// import { evaluate } from '../../utils/evaluate'
+import { evaluate } from '../../utils/evaluate'
 
 class Calculator extends React.Component<{}, {}> {
     render() {
