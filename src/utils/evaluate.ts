@@ -1,6 +1,7 @@
 // Utility package to evaluate expressions.
 import Expression from './expression'
 
+// For debugging purposes.
 const { log }: Console = console
 
 /**
@@ -9,7 +10,9 @@ const { log }: Console = console
  */
 export const evaluate2 = (expression: string): string | undefined => {
     if (expression.length) {
-        let resExpression = new Expression(expression)
+        let patt: RegExp = /([\W]){2,}/g
+        let clean = expression.replace(patt, '$1')
+        let resExpression = new Expression(clean)
         return resExpression.evaluatePostfix().toString()
     }
 }
