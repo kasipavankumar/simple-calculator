@@ -5,16 +5,19 @@ const leadingZeroesPattern: RegExp = /(^[0+\-*\/]{1,})/g
 const trailingSymbolsPattern: RegExp = /([+\-*\/]{1,}$)/g
 const stripPattern: RegExp = /(^[0+\-*\/]{1,})|([+\-*\/]{1,}$)/gi
 const multipleOperatorsPattern: RegExp = /(?=\d)|([\+\*\/]{2,})|(?=\d)/g
+const negativeOperatorsPattern: RegExp = /([\+\-\*\/])(-?[0-9]\d*(\.\d+)?)/g
 
 class Expression {
     private readonly stripPattern: RegExp
     private readonly operatorsPattern: RegExp
+    private readonly negativeOperatorsPattern: RegExp
     private expression: string
 
     constructor(expression: string) {
         this.expression = expression
         this.stripPattern = /(^[0+\-*\/]{1,})|([+\-*\/]{1,}$)/gi
         this.operatorsPattern = /([\+\-\*\/])/g
+        this.negativeOperatorsPattern = /([\+\-\*\/])(-?[0-9]\d*(\.\d+)?)/g
     }
 
     /**

@@ -72,10 +72,33 @@ class CalculatorBody extends Component<{}, CBState> {
         const { value }: HTMLButtonElement = target
         const { currentValue, expression }: CBState = this.state
 
-        this.setState({
-            currentValue: currentValue.concat(value),
-            expression: expression.concat(value),
-        })
+        if (
+            this.operators.includes(value) &&
+            this.operators.includes(currentValue[currentValue.length - 1])
+        ) {
+            if (value !== '-') {
+                let c = currentValue[currentValue.length - 1]
+                this.setState({
+                    currentValue: currentValue.replace(c, value),
+                    expression: expression.replace(c, value),
+                })
+            } else {
+                this.setState({
+                    currentValue: currentValue.concat('(' + value + ')'),
+                    expression: expression.concat(value),
+                })
+            }
+        } else {
+            this.setState({
+                currentValue: currentValue.concat(value),
+                expression: expression.concat(value),
+            })
+        }
+
+        // this.setState({
+        //     currentValue: currentValue.concat(value),
+        //     expression: expression.concat(value),
+        // })
     }
 
     /** Event handler for clear button which will reset the state. */
@@ -103,7 +126,7 @@ class CalculatorBody extends Component<{}, CBState> {
     render() {
         const { currentValue, expression, hasErrors, errorMessage } = this.state
 
-        console.log('Current value: ', currentValue)
+        console.log('Current value: ', expression)
 
         return (
             <Fragment>
