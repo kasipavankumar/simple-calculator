@@ -1,6 +1,7 @@
 # Misc directories
 .cache
 .vscode
+.playground
 
 # Node modules
 node_modules

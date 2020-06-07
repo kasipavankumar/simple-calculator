@@ -3,7 +3,7 @@ import React, { Fragment, Component, MouseEvent } from 'react'
 import { NumberButtons, ActionButtons } from './CalculatorButtons'
 // import Alert from '../Alert/Alert'
 
-import { evaluate } from '../../utils/evaluate'
+import { evaluate2 } from '../../utils/evaluate'
 
 class Calculator extends React.Component<{}, {}> {
     render() {
@@ -92,8 +92,8 @@ class CalculatorBody extends Component<{}, CBState> {
             let exprStr: string = expression.replace(this.multipleZeroPattern, '') || '0'
 
             this.setState({
-                expression: evaluate(exprStr),
-                currentValue: evaluate(exprStr),
+                expression: evaluate2(exprStr),
+                currentValue: evaluate2(exprStr),
                 hasErrors: false,
                 errorMessage: '',
             })
