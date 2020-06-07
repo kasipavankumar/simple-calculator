@@ -11,3 +11,6 @@ dist
 
 # debug files
 debug
+
+# deploy script
+deploy.sh
