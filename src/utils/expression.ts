@@ -7,6 +7,7 @@ const trailingSymbolsPattern: RegExp = /([+\-*\/]{1,}$)/g
 const stripPattern: RegExp = /(^[0+\-*\/]{1,})|([+\-*\/]{1,}$)/gi
 const multipleOperatorsPattern: RegExp = /(?=\d)|([\+\*\/]{2,})|(?=\d)/g
 const negativeOperatorsPattern: RegExp = /([\+\-\*\/])(-?[0-9]\d*(\.\d+)?)/g
+const splitPattern: RegExp = /([+-\/*])(-?[0-9]\d*(\.\d+)?)/g
 
 /**
  * @class Expression - Container to perfor tasks related to 

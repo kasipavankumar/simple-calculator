@@ -120,6 +120,13 @@ class CalculatorBody extends Component<{}, CBState> {
                 hasErrors: false,
                 errorMessage: '',
             })
+
+            // this.setState({
+            //     expression: eval(expression).toString(),
+            //     currentValue: eval(expression).toString(),
+            //     hasErrors: false,
+            //     errorMessage: '',
+            // })
         }
     }
 
