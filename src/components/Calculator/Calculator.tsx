@@ -25,8 +25,8 @@ interface CBState {
 /** Calculator Body component. */
 class CalculatorBody extends Component<{}, CBState> {
     private readonly operators: string[] = ['+', '-', '/', '*', '^']
-    private multipleZeroPattern: RegExp = /(^[0]{1,})/gi
-    private multipleDotPattern: RegExp = /([.]{2,})/gi
+    private readonly multipleZeroPattern: RegExp = /(^[0]{1,})/gi
+    private readonly multipleDotPattern: RegExp = /([.]{2,})/gi
     private initialState: CBState = {
         currentValue: '',
         expression: '',
@@ -72,33 +72,33 @@ class CalculatorBody extends Component<{}, CBState> {
         const { value }: HTMLButtonElement = target
         const { currentValue, expression }: CBState = this.state
 
-        if (
-            this.operators.includes(value) &&
-            this.operators.includes(currentValue[currentValue.length - 1])
-        ) {
-            if (value !== '-') {
-                let c = currentValue[currentValue.length - 1]
-                this.setState({
-                    currentValue: currentValue.replace(c, value),
-                    expression: expression.replace(c, value),
-                })
-            } else {
-                this.setState({
-                    currentValue: currentValue.concat('(' + value + ')'),
-                    expression: expression.concat(value),
-                })
-            }
-        } else {
-            this.setState({
-                currentValue: currentValue.concat(value),
-                expression: expression.concat(value),
-            })
-        }
+        // if (
+        //     this.operators.includes(value) &&
+        //     this.operators.includes(currentValue[currentValue.length - 1])
+        // ) {
+        //     if (value !== '-') {
+        //         let c = currentValue[currentValue.length - 1]
+        //         this.setState({
+        //             currentValue: currentValue.replace(c, value),
+        //             expression: expression.replace(c, value),
+        //         })
+        //     } else {
+        //         this.setState({
+        //             currentValue: currentValue.concat('(' + value + ')'),
+        //             expression: expression.concat(value),
+        //         })
+        //     }
+        // } else {
+        //     this.setState({
+        //         currentValue: currentValue.concat(value),
+        //         expression: expression.concat(value),
+        //     })
+        // }
 
-        // this.setState({
-        //     currentValue: currentValue.concat(value),
-        //     expression: expression.concat(value),
-        // })
+        this.setState({
+            currentValue: currentValue.concat(value),
+            expression: expression.concat(value),
+        })
     }
 
     /** Event handler for clear button which will reset the state. */
@@ -126,7 +126,7 @@ class CalculatorBody extends Component<{}, CBState> {
     render() {
         const { currentValue, expression, hasErrors, errorMessage } = this.state
 
-        console.log('Current value: ', expression)
+        console.log('Current value: ', currentValue)
 
         return (
             <Fragment>

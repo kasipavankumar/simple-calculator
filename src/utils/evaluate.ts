@@ -10,7 +10,6 @@ const { log }: Console = console
 export const evaluate2 = (expression: string): string | undefined => {
     if (expression.length) {
         let resExpression = new Expression(expression)
-        let res = resExpression.evaluatePostfix().toString()
         return resExpression.evaluatePostfix().toString()
     }
 }
